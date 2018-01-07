@@ -14,7 +14,7 @@ class ProductItem extends Component {
   props: Props;
 
   render() {
-    const { selected, data } = this.props;
+    const { data } = this.props;
 
     return (
       <tr>

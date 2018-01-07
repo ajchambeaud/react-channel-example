@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import type Product from '../data/products';
-import ProductItem from './ProductItem';
 import { Modal, Button } from 'react-bootstrap';
 import { emit } from '../react-channel';
 

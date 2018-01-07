@@ -50,7 +50,7 @@ export default withSubscriptions({
       selected: product
     };
   },
-  'ProductModal/close': product => {
+  'ProductModal/close': () => {
     return {
       selected: null
     };

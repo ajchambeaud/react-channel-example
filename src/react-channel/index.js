@@ -8,12 +8,18 @@ export const emit = (event, data) => {
 };
 
 export const subscribe = (event, handler) => {
-  channel.subscribe(event, function(data) {
+  return channel.subscribe(event, function(data) {
     handler(data);
   });
 };
 
+export const unsubscribe = token => {
+  channel.unsubscribe(token);
+};
+
 export const withSubscriptions = subscriptions => WrappedComponent => {
+  const subscriptionsTokens = [];
+
   return class extends React.Component {
     constructor(props) {
       super(props);
@@ -23,10 +29,17 @@ export const withSubscriptions = subscriptions => WrappedComponent => {
     componentDidMount() {
       Object.keys(subscriptions).forEach(event => {
         const handler = subscriptions[event];
-        subscribe(event, data => {
+        const token = subscribe(event, data => {
           const state = handler(data);
           this.setState(state);
         });
+        subscriptionsTokens.push(token);
+      });
+    }
+
+    componentWillUnmount() {
+      subscriptionsTokens.forEach(token => {
+        unsubscribe(token);
       });
     }
 
